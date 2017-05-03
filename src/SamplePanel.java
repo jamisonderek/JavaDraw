@@ -29,5 +29,9 @@ public class SamplePanel extends JPanel {
         int blue = 20;
         g.setColor(new Color(red, green, blue));
         g.drawOval(230, 230, 80, 30);
+        
+        // Draw pink square
+        g.setColor(Color.pink);
+        g.drawRect(230, 230, 10, 10);
     }
 }
