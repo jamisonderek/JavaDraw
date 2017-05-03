@@ -18,5 +18,9 @@ public class SamplePanel extends JPanel {
         g.drawString("(30,30)", 30, 30);
         g.drawString("(230,30)", 230, 30);
         g.drawString("(30,230)", 30, 230);
+        
+        // Draw red line
+        g.setColor(Color.red);
+        g.drawLine(30, 30, 230, 30);
     }
 }
