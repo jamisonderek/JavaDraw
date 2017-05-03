@@ -22,5 +22,12 @@ public class SamplePanel extends JPanel {
         // Draw red line
         g.setColor(Color.red);
         g.drawLine(30, 30, 230, 30);
+        
+        // Draw cyan oval
+        int red = 100;
+        int green = 200;
+        int blue = 20;
+        g.setColor(new Color(red, green, blue));
+        g.drawOval(230, 230, 80, 30);
     }
 }
