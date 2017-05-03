@@ -1,6 +1,10 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class SamplePanel extends JPanel {
@@ -33,5 +37,17 @@ public class SamplePanel extends JPanel {
         // Draw pink square
         g.setColor(Color.pink);
         g.drawRect(230, 230, 10, 10);
+        
+        // Draw image
+        BufferedImage img = null;
+        try {
+        	String fileName = "BSD.png";
+        	File file = new File(System.getProperty("user.dir") + 
+        			File.separatorChar + fileName);
+            img = ImageIO.read(file);
+            g.drawImage(img, 300, 300, null);
+        } catch (IOException e) {
+        	System.out.println(e);
+        }  
     }
 }
