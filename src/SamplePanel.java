@@ -14,7 +14,7 @@ public class SamplePanel extends JPanel {
         // Fill background of our panel with blue
         g.setColor(Color.blue);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
-        
+
         // Draw yellow text
         g.setColor(Color.yellow);
         Font font = new Font("Arial", Font.BOLD, 38);
@@ -22,6 +22,10 @@ public class SamplePanel extends JPanel {
         g.drawString("(30,30)", 30, 30);
         g.drawString("(230,30)", 230, 30);
         g.drawString("(30,230)", 30, 230);
+
+        // Draw random color square
+        g.setColor(new Color((int)(Math.random()*10000000)));
+        g.fillRect(100, 100, 100, 100);
         
         // Draw red line
         g.setColor(Color.red);
