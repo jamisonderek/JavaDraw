@@ -13,7 +13,7 @@ public class Demo implements Runnable {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("My Demo program");
 		frame.setPreferredSize(new Dimension(640,480));
-		frame.add(new SamplePanel());
+		frame.add(new SamplePanel2());
 		frame.pack();
 		frame.setVisible(true);
 	}

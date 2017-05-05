@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class SamplePanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
