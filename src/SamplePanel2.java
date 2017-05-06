@@ -3,14 +3,14 @@ import java.awt.event.*;
 import java.awt.geom.*;
 import java.util.ArrayList;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 @SuppressWarnings("serial")
 public class SamplePanel2 extends JPanel {
 	
 	ArrayList<Shape> shapes;
 	Rectangle2D mouseClickRect = new Rectangle2D.Double();
-
+	Rectangle2D mouseCursorRect = new Rectangle2D.Double();
+	
 	SamplePanel2() {
 
 		setBackground(Color.blue);
@@ -38,25 +38,81 @@ public class SamplePanel2 extends JPanel {
 
 		shapes.add(MyShape(350, 100));
 
-		shapes.add(MyShape(350, 200));
-
+		shapes.add(MyShape(350, 200));		
+		
+		// mouseMoved, mouseDragged
+		addMouseMotionListener(new MouseMotionAdapter() {
+			public void mouseMoved(MouseEvent e) {
+				mouseMove(e.getX(), e.getY());
+			}
+		});
+		
+		// mousePressed
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-				pressed(e.getX(), e.getY());
+				mousePress(e.getX(), e.getY());
+			}
+		});
+		
+		// keyPressed, keyTyped, keyReleased
+		setFocusable(true);
+		requestFocusInWindow();		
+		addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				keyPress(e.getExtendedKeyCode(), e.getModifiers());
 			}
 		});
 	}
 
-	private void pressed(int x, int y) {
+	private void mousePress(int x, int y) {
 		mouseClickRect.setRect(x, y, 1, 1);
 		repaint();
 	}
 
-	public void paintComponent(Graphics graphics) {
-		super.paintComponent(graphics);
-		Graphics2D g = (Graphics2D) graphics;
+	public void mouseMove(int x, int y) {
+		mouseCursorRect.setFrame(x, y, 15, 3);
+		repaint();
+	}
 
-		Rectangle2D mouseCursorRect = getMouseCursor();
+	private void keyPress(int extendedKeyCode, int modifiers)
+	{
+		Color bg = getBackground();
+	    int r = bg.getRed();
+	    int g = bg.getGreen();
+	    int b = bg.getBlue();
+	    
+//	    if (extendedKeyCode == KeyEvent.VK_LEFT)
+//	    {
+//	    	r--;
+//	    }
+//	    else if (extendedKeyCode == KeyEvent.VK_RIGHT)
+//	    {
+//	    	r++;
+//	    }			    
+
+	    switch(extendedKeyCode)
+	    {
+	    	case KeyEvent.VK_LEFT:
+	    		r--;
+	    		break;
+	    	case KeyEvent.VK_RIGHT:
+	    		r++;
+	    		break;
+	    }
+	    
+	    r = Math.min(Math.max(r, 0), 255);
+	    g = Math.min(Math.max(g, 0), 255);
+	    b = Math.min(Math.max(b, 0), 255);
+	    setBackground(new Color(r, g, b));
+
+		System.out.println("extendedKeyCode:"+extendedKeyCode+" modifier:"+modifiers+" color:"+getBackground());
+
+		repaint();
+	}
+	
+	public void paintComponent(Graphics graphics) {
+		super.paintComponent(graphics);		
+		Graphics2D g = (Graphics2D) graphics;
 		
 		for (Shape s : shapes) {
 			if (s.intersects(mouseClickRect)) {
@@ -74,18 +130,9 @@ public class SamplePanel2 extends JPanel {
 				g.draw(s);
 			}
 		}
-		
-		// Repaint so that we paint latest mouseCursor.
-		repaint();
-	}
-	
-	private Rectangle2D getMouseCursor()
-	{
-		Point cursor = MouseInfo.getPointerInfo().getLocation();
-		Point locataionOfJPanel = new Point(0,0);
-		SwingUtilities.convertPointToScreen(locataionOfJPanel, this);		
-		Rectangle2D mouseCursor = new Rectangle2D.Double(cursor.getX()-locataionOfJPanel.getX(), cursor.getY()-locataionOfJPanel.getY(), 1, 1); 		
-		return mouseCursor;
+				
+		g.setPaint(Color.red);
+		g.fill(mouseCursorRect);
 	}
 	
 	private Shape MyShape(int x, int y) {
